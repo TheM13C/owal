@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create</title>
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Gradient background from top #0064f4 to bottom #03296a */
+      background: linear-gradient(to bottom, #0064f4, #03296a);
+    }
+    .search-button {
+      background: url('https://gdbrowser.com/assets/category-search.png?v=1') no-repeat center center;
+      background-size: contain;
+      width: 64px;
+      height: 64px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease-out;
+      outline: none;
+      -webkit-appearance: none;
+      background-color: transparent;
+    }
+    .search-button:active {
+      transform: scale(1.2);
+      transition: transform 0.07s ease-in;
+    }
+    .iframe-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      z-index: 999;
+    }
+    .iframe-container.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 48px;
+      height: 48px;
+      background: url('https://gdbrowser.com/assets/back.png') no-repeat center center;
+      background-size: contain;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.etsystatic.com/45656247/c/302/302/9/0/il/2c3e48/5138931944/il_300x300.5138931944_dpcy.jpg') center center / cover no-repeat;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 10000;
+    }
+    .fade-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 1);
+    }
+    .fade-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="search-button" onclick="handleOpen()"></button>
+
+  <div class="iframe-container" id="searchFrame">
+    <button class="back-button" onclick="handleClose()"></button>
+    <iframe src="https://gdbrowser.com/search"></iframe>
+  </div>
+
+  <div class="fade-overlay" id="fadeOverlay"></div>
+
+  <script>
+    const overlay = document.getElementById('fadeOverlay');
+    const frame = document.getElementById('searchFrame');
+
+    function handleOpen() {
+      overlay.classList.add('visible');
+      setTimeout(() => {
+        frame.classList.add('visible');
+      }, 10);
+      setTimeout(() => {
+        overlay.classList.remove('visible');
+      }, 200);
+    }
+
+    function handleClose() {
+      overlay.classList.add('visible');
+      setTimeout(() => {
+        frame.classList.remove('visible');
+      }, 50);
+      setTimeout(() => {
+        overlay.classList.remove('visible');
+      }, 200);
+    }
+  </script>
+
+</body>
+</html>
